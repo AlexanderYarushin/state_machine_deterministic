@@ -1,6 +1,15 @@
 #include <QCoreApplication>
+#include <QTextStream>
+#include <QTextCodec>
 
 #include "lib.cpp"
+
+void log(const QString text){
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("IBM 866"));
+    QTextStream cout(stdout);
+    cout << text;
+}
+
 
 static std::vector<QString> arrayInput  = {
     "Карта",
