@@ -92,7 +92,7 @@ static std::vector<std::vector<unsigned>> outputTable = {
     {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},  //1
     {0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},  //2
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},  //3
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //4
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},  //4
     {0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0},  //5
     {0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0},  //6
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},  //7
@@ -110,7 +110,7 @@ static std::vector<std::vector<unsigned>> outputTable = {
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //19
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //20
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //21
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,3,0,0}, //22
+    {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}, //22
     {0,0,0,0,0,0,0,0,0,0,0,7,0,0,0,0,0},  //23
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,0},  //24
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7},  //25
@@ -123,6 +123,8 @@ void jump(unsigned index){
     int select = 0, currentSelect = 0;
     unsigned newCondition;
     std::vector<unsigned> selectArray;
+    std::vector<unsigned> outputArray;
+
 
     log("Текущее состояние: "+arrayCondition[index]+"\n");
     log("Действия:\n");
@@ -132,8 +134,11 @@ void jump(unsigned index){
             log(QString::number(select+1) + ". " + arrayInput[i]+"\n");
             select++;
             selectArray.push_back(jumpTable[i][index]);
+            outputArray.push_back(i);
         }
     }
+
+
 repeatEnter:
     log("Выберите действие: ");
     cin >> currentSelect;
@@ -145,16 +150,11 @@ repeatEnter:
 
     newCondition = selectArray[currentSelect-1]-1;
 
-
     log("\nПереход из состояния \""+arrayCondition[index]+"\" в состояние \""+arrayCondition[newCondition]+"\"\n");
 
-    for(int i = 0; i < outputTable.size(); ++i){
-        if(outputTable[index][i] != 0){
-            log("Выходные данные: "+arrayOutput[outputTable[index][i]]+"\n\n");
-            break;
-        }
-        log("\n");
-    }
+
+    if(outputTable[outputArray[currentSelect-1]][index] != 0) log("Выходные данные: "+arrayOutput[outputTable[outputArray[currentSelect-1]][index]-1]+"\n\n");
+        else log("\n");
 
 
     log("------------------------------\n\n");
